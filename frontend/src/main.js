@@ -46,6 +46,7 @@ setConfig('resourceFetcher', frappeRequest)
 app.use(resourcesPlugin)
 app.use(pageMetaPlugin)
 app.use(router)
+
 app.mixin(resetDataMixin)
 for (let key in globalComponents) {
   app.component(key, globalComponents[key])

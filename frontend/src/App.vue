@@ -13,6 +13,7 @@ import { Dialogs } from '@/utils/dialogs'
 import { Toasts } from '@/utils/toasts'
 import { users } from '@/data/users'
 import { useScreenSize } from './utils/composables'
+//import vueKanban from 'vue-kanban'
 
 const size = useScreenSize()
 const isMobile = computed(() => size.width < 640)

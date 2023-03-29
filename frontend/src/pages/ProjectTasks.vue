@@ -2,7 +2,7 @@
   <div class="flex">
     <div class="h-full w-full overflow-auto py-6">
       <div class="mb-5 flex items-center justify-between">
-        <h2 class="text-2xl font-semibold">Tasks</h2>
+        <h2 class="text-2xl font-semibold">Project Tasks</h2>
         <div class="flex items-stretch space-x-2">
           <div class="flex rounded-md bg-gray-100 p-1 text-sm">
             <button
@@ -49,10 +49,38 @@
           >
             New Task
           </Button>
+          <Button @click="tasksData">Tasks</Button>
         </div>
       </div>
+
+      <div v-for="column in projectColumns.originalData" class="grid grid-cols-2 gap-5 sm:grid-cols-4">
+        <div
+          class="block rounded-xl bg-gray-100 px-3.5 py-2.5"
+          :key="hello"
+        >
+          <div
+            :class="[
+              'text-xl font-bold',
+              'text-gray-700',
+            ]"
+          >
+            {{ "Card" }}
+          </div>
+          <div class="text-base text-gray-700">{{ column.title }}</div>
+        </div>
+      </div>
+
       <div class="divide-y">
-        <router-link
+        <!-- <router-link
+          v-for="d in tasks.data"
+          :key="d.name"
+          :to="{
+            name: 'ProjectTaskDetail',
+            params: { teamId: d.team, projectId: d.project, taskId: d.name },
+          }"
+          class="block p-3 hover:bg-gray-50"
+        > -->
+        <div
           v-for="d in tasks.data"
           :key="d.name"
           :to="{
@@ -95,7 +123,7 @@
               {{ $dayjs(d.due_date).format('LL') }}
             </span>
           </div>
-        </router-link>
+        </div>
       </div>
       <div
         class="text-base text-gray-600"
@@ -109,6 +137,7 @@
 <script>
 import { Avatar, Popover, Tooltip } from 'frappe-ui'
 import TabButtons from '@/components/TabButtons.vue'
+import draggable from 'vuedraggable'
 
 export default {
   name: 'ProjectTasks',
@@ -144,6 +173,17 @@ export default {
         auto: true,
       }
     },
+    projectColumns() {
+      return {
+        type: 'list',
+        doctype: 'GP Column',
+        fields: ['*'],
+        filters: {
+          project: this.project.doc.name
+        },
+        auto: true
+      }
+    },
   },
   methods: {
     taskTimestampDescription(d) {
@@ -152,6 +192,11 @@ export default {
         `Updated On: ${this.$dayjs(d.modified).format('LLL')}`,
       ].join('\n')
     },
+    tasksData() {
+      //console.log(JSON.stringify(this.tasks.data))
+      //console.log(this.project.doc)
+      console.log(JSON.stringify(this.$resources.projectColumns))
+    }
   },
   computed: {
     tasks() {
@@ -164,7 +209,10 @@ export default {
     openTasks() {
       return this.$route.query.open === 'true'
     },
+    projectColumns() {
+      return this.$resources.projectColumns
+    },
   },
-  components: { Avatar, Popover, Tooltip, TabButtons },
+  components: { Avatar, Popover, Tooltip, TabButtons, draggable },
 }
 </script>

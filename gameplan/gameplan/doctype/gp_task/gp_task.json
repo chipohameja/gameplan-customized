@@ -20,7 +20,9 @@
   "project_title",
   "team",
   "team_title",
-  "assigned_to"
+  "assigned_to",
+  "column",
+  "column_status"
  ],
  "fields": [
   {
@@ -113,11 +115,23 @@
    "fieldname": "completed_by",
    "fieldtype": "Data",
    "label": "Completed By"
+  },
+  {
+   "fieldname": "column",
+   "fieldtype": "Link",
+   "label": "Column",
+   "options": "GP Column"
+  },
+  {
+   "fetch_from": "column.title",
+   "fieldname": "column_status",
+   "fieldtype": "Data",
+   "label": "Column Status"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-01-12 14:37:42.077295",
+ "modified": "2023-03-29 01:18:44.180662",
  "modified_by": "Administrator",
  "module": "Gameplan",
  "name": "GP Task",
